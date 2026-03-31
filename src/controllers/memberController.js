@@ -10,8 +10,8 @@ const { v4: uuidv4 } = require('uuid');
 exports.register = async (req, res, next) => {
   try {
     const { fullName, email, password, phone, referralCode, subdomain } = req.body;
-    const { member, wallet } = await createMember({ tenantId: null, fullName, email, password, phone, referralCode, subdomain });
     const tenant = await Tenant.findOne({ where: { subdomain } });
+    const { member, wallet } = await createMember({ tenantId: tenant?.id, fullName, email, password, phone, referralCode, subdomain });
     const token = generateToken(member.id, 'member', { tenantId: member.tenantId });
     res.status(201).json({ success: true, token, user: {
       ...member.toSafeJSON(), role: 'member',
