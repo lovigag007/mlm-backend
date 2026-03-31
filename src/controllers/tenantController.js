@@ -131,7 +131,7 @@ exports.getMembers = async (req, res, next) => {
       where,
       include: [
         { association: 'sponsor', attributes: ['fullName','memberId'], required: false },
-        { association: 'wallet', attributes: ['incomeBalance','shoppingBalance','totalEarned'], required: false },
+        { association: 'wallet', attributes: ['incomeBalance','shoppingBalance','totalDebited'], required: false },
       ],
       order: [[sortBy, order]],
       offset: (page - 1) * limit, limit: Number(limit),
